@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Healthcare Assistant</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/styles.css">
+    <link rel="icon" type="image/png" href="/static/favicon.png">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <i class="fas fa-heartbeat"></i>
+            <span>Smart Healthcare Assistant</span>
+        </div>
+        <nav class="nav-links">
+            <a href="/">Chat</a>
+            <a href="/about">About</a>
+            <a href="/admin">Admin</a>
+        </nav>
+    </header>
+
+    <main>
+        <div class="chat-container">
+            <div class="chat-header">
+                <span>Healthcare Conversation</span>
+                <div class="chat-status">
+                    <div class="status-indicator"></div>
+                    <span>AI Assistant Online</span>
+                </div>
+            </div>
+            <div class="messages">
+            </div>
+            <form class="chat-form">
+                <div class="chat-input-container">
+                    <!-- Image upload button will be inserted here -->
+                    <input type="text" class="chat-input" placeholder="Type your health question here..." autocomplete="off">
+                </div>
+                <button type="submit" class="send-btn">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </form>
+        </div>
+        <div class="disclaimer">
+            Note: This AI assistant provides general health information and is not a substitute for professional medical advice, diagnosis, or treatment.
+        </div>
+    </main>
+
+    <script src="/static/app.js"></script>
+</body>
+</html>

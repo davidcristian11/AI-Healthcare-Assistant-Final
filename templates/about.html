@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - Smart Healthcare Assistant</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/styles.css">
+    <link rel="icon" type="image/png" href="/static/favicon.png">
+    <style>
+        .about-container {
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-md);
+            padding: 24px;
+            margin-bottom: 24px;
+        }
+
+        .about-header {
+            color: var(--primary-color);
+            font-size: 28px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .section-title {
+            font-size: 20px;
+            color: var(--primary-dark);
+            margin-top: 24px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 16px;
+            margin-top: 16px;
+        }
+
+        .feature-card {
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+            padding: 16px;
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .feature-card:hover {
+            box-shadow: var(--shadow-md);
+            transform: translateY(-2px);
+        }
+
+        .feature-icon {
+            color: var(--primary-color);
+            font-size: 24px;
+            margin-bottom: 8px;
+        }
+
+        .feature-title {
+            font-weight: 500;
+            color: var(--primary-dark);
+        }
+
+        .feature-description {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .disclaimer-box {
+            background-color: #FFF8E1;
+            border-left: 4px solid #FFC107;
+            padding: 16px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+
+        .disclaimer-title {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #F57C00;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .team-section {
+            margin-top: 24px;
+        }
+
+        .team-member {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .team-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background-color: var(--primary-color);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 500;
+            font-size: 18px;
+        }
+
+        .team-info {
+            flex: 1;
+        }
+
+        .team-name {
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+
+        .team-role {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <i class="fas fa-heartbeat"></i>
+            <span>Smart Healthcare Assistant</span>
+        </div>
+        <nav class="nav-links">
+            <a href="/">Chat</a>
+            <a href="/about">About</a>
+            <a href="/admin">Admin</a>
+        </nav>
+    </header>
+
+    <main>
+        <div class="about-container">
+            <h1 class="about-header">
+                <i class="fas fa-info-circle"></i>
+                About Healthcare Assistant
+            </h1>
+
+            <p>The Smart Healthcare Assistant is an AI-powered platform designed to provide accurate and helpful medical information.
+            It leverages advanced natural language processing and a specialized knowledge base to offer reliable healthcare guidance.</p>
+
+            <div class="disclaimer-box">
+                <div class="disclaimer-title">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <span>Important Disclaimer</span>
+                </div>
+                <p>This AI assistant provides general health information and is not a substitute for professional medical advice,
+                diagnosis, or treatment. Always consult with a qualified healthcare provider for medical concerns.</p>
+            </div>
+
+            <h2 class="section-title">
+                <i class="fas fa-star"></i>
+                Key Features
+            </h2>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <div class="feature-title">AI-Powered Responses</div>
+                    <div class="feature-description">
+                        Advanced AI technology to understand and respond to your health questions.
+                    </div>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-database"></i>
+                    </div>
+                    <div class="feature-title">Specialized Knowledge Base</div>
+                    <div class="feature-description">
+                        Curated medical information to provide accurate and relevant responses.
+                    </div>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-image"></i>
+                    </div>
+                    <div class="feature-title">Image Analysis</div>
+                    <div class="feature-description">
+                        Upload medical images for AI analysis and insights.
+                    </div>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <div class="feature-title">Privacy Focused</div>
+                    <div class="feature-description">
+                        Your health data is protected and handled with strict confidentiality.
+                    </div>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-history"></i>
+                    </div>
+                    <div class="feature-title">Conversation History</div>
+                    <div class="feature-description">
+                        Review your past interactions to track health information.
+                    </div>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <div class="feature-title">Responsive Design</div>
+                    <div class="feature-description">
+                        Access from any device - desktop, tablet, or mobile phone.
+                    </div>
+                </div>
+            </div>
+
+            <h2 class="section-title">
+                <i class="fas fa-users"></i>
+                Our Team
+            </h2>
+
+            <div class="team-section">
+                <div class="team-member">
+                    <div class="team-avatar">PRB</div>
+                    <div class="team-info">
+                        <div class="team-name">Pop Raul Bogdan</div>
+                        <div class="team-role">Chief Algorithm Alchemist</div>
+                    </div>
+                </div>
+
+                <div class="team-member">
+                    <div class="team-avatar">PPS</div>
+                    <div class="team-info">
+                        <div class="team-name">Popa Paul Samuel</div>
+                        <div class="team-role">DJ SPaul</div>
+                    </div>
+                </div>
+
+                <div class="team-member">
+                    <div class="team-avatar">SDC</div>
+                    <div class="team-info">
+                        <div class="team-name">Strîmbu David-Cristian</div>
+                        <div class="team-role">Chief Algorithm Alchemist</div>
+                    </div>
+                </div>
+
+            </div>
+
+            <h2 class="section-title">
+                <i class="fas fa-code"></i>
+                Technology Stack
+            </h2>
+
+            <p>The Smart Healthcare Assistant is built using cutting-edge technologies:</p>
+            <ul>
+                <li>Frontend: HTML, CSS, JavaScript</li>
+                <li>Backend: Python, Flask</li>
+                <li>AI: Azure OpenAI, Custom Knowledge Base</li>
+                <li>Image Analysis: Computer Vision, AI Models</li>
+                <li>Data Storage: Secure Document Database</li>
+            </ul>
+
+            <h2 class="section-title">
+                <i class="fas fa-question-circle"></i>
+                Need Help?
+            </h2>
+
+            <p>If you have any questions or need support, please contact us at <a href="mailto:support@healthcareassistant.com">support@healthcareassistant.com</a></p>
+        </div>
+    </main>
+
+    <footer style="text-align: center; padding: 20px 0; color: var(--text-secondary); font-size: 14px; border-top: 1px solid var(--border-color);">
+        <p>&copy; 2025 Smart Healthcare Assistant. All rights reserved.</p>
+    </footer>
+</body>
+</html>

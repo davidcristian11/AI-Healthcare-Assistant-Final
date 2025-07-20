@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Smart Healthcare Assistant</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/styles.css">
+    <link rel="icon" type="image/png" href="/static/favicon.png">
+    <style>
+        .admin-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .doc-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 16px;
+            margin-top: 20px;
+        }
+
+        .doc-card {
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-sm);
+            overflow: hidden;
+            transition: var(--transition);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .doc-card:hover {
+            box-shadow: var(--shadow-md);
+            transform: translateY(-2px);
+        }
+
+        .doc-header {
+            padding: 16px;
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .doc-title {
+            font-weight: 500;
+            font-size: 16px;
+            margin: 0;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .doc-category {
+            font-size: 12px;
+            opacity: 0.8;
+            margin-top: 4px;
+        }
+
+        .doc-content {
+            padding: 16px;
+            flex: 1;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .doc-text {
+            font-size: 14px;
+            line-height: 1.5;
+            color: var(--text-color);
+            max-height: 120px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .doc-text::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 40px;
+            background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,1));
+        }
+
+        .doc-footer {
+            padding: 12px 16px;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: var(--light-bg);
+        }
+
+        .doc-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .doc-action {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid var(--border-color);
+            cursor: pointer;
+            transition: var(--transition);
+            color: var(--text-secondary);
+        }
+
+        .doc-action:hover {
+            background-color: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .doc-info {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        .add-document-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 500;
+        }
+
+        .add-document-btn:hover {
+            background-color: var(--primary-dark);
+        }
+
+        .document-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+        }
+
+        .document-modal.show {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: var(--border-radius);
+            width: 600px;
+            max-width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: var(--shadow-lg);
+            transform: translateY(20px);
+            transition: transform 0.3s;
+        }
+
+        .document-modal.show .modal-content {
+            transform: translateY(0);
+        }
+
+        .modal-header {
+            padding: 16px 20px;
+            background-color: var(--primary-color);
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1;
+        }
+
+        .modal-title {
+            font-weight: 500;
+            font-size: 18px;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            opacity: 0.8;
+            transition: opacity 0.2s;
+        }
+
+        .modal-close:hover {
+            opacity: 1;
+        }
+
+        .modal-body {
+            padding: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--text-color);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            font-family: var(--font-family);
+            font-size: 14px;
+            transition: border-color 0.2s;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(66, 133, 244, 0.2);
+        }
+
+        textarea.form-control {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .modal-footer {
+            padding: 16px 20px;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+        }
+
+        .btn {
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .btn-secondary {
+            background-color: white;
+            border: 1px solid var(--border-color);
+            color: var(--text-color);
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--light-bg);
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+        }
+
+        .search-container {
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 12px 16px;
+            padding-left: 40px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            font-family: var(--font-family);
+            font-size: 14px;
+            transition: border-color 0.2s;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(66, 133, 244, 0.2);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-secondary);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-sm);
+            margin-top: 20px;
+        }
+
+        .empty-icon {
+            font-size: 48px;
+            color: var(--border-color);
+            margin-bottom: 16px;
+        }
+
+        .empty-title {
+            font-size: 18px;
+            font-weight: 500;
+            color: var(--text-color);
+            margin-bottom: 8px;
+        }
+
+        .empty-description {
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <i class="fas fa-heartbeat"></i>
+            <span>Smart Healthcare Assistant</span>
+        </div>
+        <nav class="nav-links">
+            <a href="/">Chat</a>
+            <a href="/about">About</a>
+            <a href="/admin">Admin</a>
+        </nav>
+    </header>
+
+    <main>
+        <div class="admin-container">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <h1 style="color: var(--primary-color); margin: 0;">Knowledge Base Management</h1>
+                <button id="addDocumentBtn" class="add-document-btn">
+                    <i class="fas fa-plus"></i> Add Document
+                </button>
+            </div>
+
+            <div class="search-container">
+                <i class="fas fa-search search-icon"></i>
+                <input type="text" id="searchInput" class="search-input" placeholder="Search knowledge base...">
+            </div>
+
+            {% if documents %}
+            <div class="doc-grid" id="documentGrid">
+                {% for doc in documents %}
+                <div class="doc-card">
+                    <div class="doc-header">
+                        <h3 class="doc-title">{{ doc.title }}</h3>
+                        {% if doc.category %}
+                        <div class="doc-category">{{ doc.category }}</div>
+                        {% endif %}
+                    </div>
+                    <div class="doc-content">
+                        <div class="doc-text">{{ doc.content }}</div>
+                    </div>
+                    <div class="doc-footer">
+                        <div class="doc-actions">
+                            <div class="doc-action" title="Edit Document">
+                                <i class="fas fa-edit"></i>
+                            </div>
+                            <div class="doc-action" title="Delete Document">
+                                <i class="fas fa-trash-alt"></i>
+                            </div>
+                            <div class="doc-action" title="View Document">
+                                <i class="fas fa-eye"></i>
+                            </div>
+                        </div>
+                        <div class="doc-info">
+                            <span>{{ doc.content|length }} characters</span>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+            <div class="empty-state">
+                <div class="empty-icon">
+                    <i class="fas fa-folder-open"></i>
+                </div>
+                <h3 class="empty-title">No Documents Found</h3>
+                <p class="empty-description">Your knowledge base is empty. Add your first document to get started.</p>
+                <button class="btn btn-primary" id="emptyStateAddBtn">
+                    <i class="fas fa-plus"></i> Add Document
+                </button>
+            </div>
+            {% endif %}
+        </div>
+
+        <div id="documentModal" class="document-modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-title">Add New Document</h2>
+                    <button class="modal-close" id="closeModalBtn">&times;</button>
+                </div>
+                <form action="/admin/add" method="POST" id="documentForm">
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="title" class="form-label">Document Title</label>
+                            <input type="text" id="title" name="title" class="form-control" required placeholder="Enter document title">
+                        </div>
+                        <div class="form-group">
+                            <label for="category" class="form-label">Category</label>
+                            <input type="text" id="category" name="category" class="form-control" placeholder="E.g., Cardiology, Neurology, etc.">
+                        </div>
+                        <div class="form-group">
+                            <label for="content" class="form-label">Content</label>
+                            <textarea id="content" name="content" class="form-control" required placeholder="Enter document content"></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" id="cancelBtn">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Save Document</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const documentModal = document.getElementById('documentModal');
+        const addDocumentBtn = document.getElementById('addDocumentBtn');
+        const closeModalBtn = document.getElementById('closeModalBtn');
+        const cancelBtn = document.getElementById('cancelBtn');
+        const emptyStateAddBtn = document.getElementById('emptyStateAddBtn');
+
+        const searchInput = document.getElementById('searchInput');
+        const documentGrid = document.getElementById('documentGrid');
+
+        function showModal() {
+            documentModal.classList.add('show');
+        }
+
+        function hideModal() {
+            documentModal.classList.remove('show');
+        }
+
+        if (addDocumentBtn) {
+            addDocumentBtn.addEventListener('click', showModal);
+        }
+
+        if (emptyStateAddBtn) {
+            emptyStateAddBtn.addEventListener('click', showModal);
+        }
+
+        closeModalBtn.addEventListener('click', hideModal);
+        cancelBtn.addEventListener('click', hideModal);
+
+        // Close modal when clicking outside
+        documentModal.addEventListener('click', function(e) {
+            if (e.target === documentModal) {
+                hideModal();
+            }
+        });
+
+        if (searchInput && documentGrid) {
+            searchInput.addEventListener('input', function() {
+                const searchTerm = this.value.toLowerCase();
+                const docCards = documentGrid.querySelectorAll('.doc-card');
+
+                docCards.forEach(card => {
+                    const title = card.querySelector('.doc-title').textContent.toLowerCase();
+                    const content = card.querySelector('.doc-text').textContent.toLowerCase();
+                    const category = card.querySelector('.doc-category') ?
+                                    card.querySelector('.doc-category').textContent.toLowerCase() : '';
+
+                    if (title.includes(searchTerm) || content.includes(searchTerm) || category.includes(searchTerm)) {
+                        card.style.display = '';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        }
+    </script>
+</body>
+</html>
